@@ -6,12 +6,14 @@ def input_student():
 
 #input student info
 students = {}
+list_student_id = []
 def student_info(n):
     for i in range(n):
         student_id = str(input('Enter student id: '))
         name = str(input('Enter student name: '))
         birth = str(input('Enter DoB: '))
         students.update({student_id: [name,birth]})
+        list_student_id.append(student_id)
 
 #listing student
 def listing_student():
@@ -46,21 +48,14 @@ def choose_course():
         if x == key:
             return x
 
-#create list and dict
-list_course_id = []
-list_student_id = []
+#create a dict of mark
 course_marks = {}
+course_marks.update(courses) #coupy courses dict to course_marks
 
 #function for entering and storing marks
-def student_mark(k,n,a):
+def student_mark(k):
     marks = []
-
-    for ke in courses.keys(): 
-        list_course_id.append(ke) #add course id to list
-
-    for ky in students.keys():
-        list_student_id.append(ky) #add student id to a list
-
+    
     #entering marks
     if k in courses.keys():
         for i in range(len(list_student_id)):
@@ -72,9 +67,7 @@ def student_mark(k,n,a):
         print("Wrong ID")
     
     student_marks = dict(zip(list_student_id,marks)) #make a dict of student id and marks
-    course_marks.update(courses) #coupy courses dict to course_marks
-    for key in course_marks.keys():
-        course_marks[key] = student_marks #make course id a key and student_marks value
+    course_marks[k] = student_marks #make course id a key and student_marks value
     
 
 #listing mark
@@ -105,7 +98,7 @@ while True:
 
     elif user_input == 3:
         k = choose_course()
-        student_mark(k,n,x)
+        student_mark(k)
         listing_mark()
     
     elif user_input == 4:
