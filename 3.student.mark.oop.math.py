@@ -33,12 +33,7 @@ class studentInput:
             birth = self.input_birth()
             self.student_list.update({ID: [name,birth]})
             list_student_ID.append(ID)
-        return list_student_ID
-    
-    def list_student(self):
-        print('List of student: ')
-        for key, value in self.student_list.items():
-            print(key, ":", value)
+        return list_student_ID, self.student_list
 
 class courseInput:
     def __init__(self):
@@ -51,11 +46,6 @@ class courseInput:
             name = infor.get_name()
             self.courses_list.update({ID:name})
         return self.courses_list
-    
-    def listing_course(self):
-        print("List of course: ")
-        for key, value in self.courses_list.items():
-            print(key, ":", value)
 
 class student_mark:
     def __init__(self,course_mark):
@@ -82,9 +72,14 @@ class student_mark:
         student_marks = dict(zip(list_student_id,marks)) #make a dict of student id and marks
         self.course_mark[k] = student_marks
         return self.course_mark
+
+#print student list, course list, course mark
+class listing:
+    def __init__ (self,dict_print):
+        self.dict_print = dict_print
     
-    def listing_mark(self):
-        for key, value in self.course_mark.items():
+    def listing_dict(self):
+        for key,value in self.dict_print.items():
             print(key, ":", value)
 
 class average_gpa:
@@ -130,6 +125,21 @@ class average_gpa:
         studentGPA = sorted(studentGPA.items(), key = lambda x:x[1], reverse=True)
         print(studentGPA)
 
+class input_num:
+    def __init__(self):
+        self.num_student = int
+        self.num_course = int
+    
+    def input_student(self):
+        self.num_student = int(input("Enter number of student: "))
+        print("Number of student: ", self.num_student)
+        return self.num_student
+    
+    def input_course(self):
+        self.num_course = int(input("Enter number of course: "))
+        print("Number of course: ", self.num_course)
+        return self.num_course
+
 if __name__ == "__main__":
     options = ['1. Enter number of student, student information',
            '2. Enter number of course, course information',
@@ -137,29 +147,32 @@ if __name__ == "__main__":
            '4. Calculate GPA',
            '5. Exit']
     
+    input_num = input_num()
+    
     while True:
         print(*options, sep = "\n")
         user_input = int(input("Choose a number: "))
 
         if user_input == 1:
-            x = int(input("Enter number of student: "))
-            print("Number of student: ", x)
+            x = input_num.input_student()
             student = studentInput()
-            list_student = student.student_info(x)
-            student.list_student()
+            list_student, student_info = student.student_info(x)
+            print_student = listing(student_info)
+            print_student.listing_dict()
 
         elif user_input == 2:
-            n = int(input("Enter number of course: "))
-            print("Number of student: ", n)
+            n = input_num.input_course()
             course = courseInput()
             list_course = course.courses_info(n)
-            course.listing_course()
+            print_course = listing(list_course)
+            print_course.listing_dict()
 
         elif user_input == 3:
             mark = student_mark(list_course)
             k = mark.choose_course()
             c = mark.student_mark(k,list_student)
-            mark.listing_mark()
+            print_mark = listing(c)
+            print_mark.listing_dict()
         
         elif user_input == 4:
             gpa = average_gpa(c)
