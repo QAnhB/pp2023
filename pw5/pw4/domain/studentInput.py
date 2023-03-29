@@ -20,10 +20,16 @@ class studentInput:
             self.student_list.update({ID: [name,birth]})
             list_student_ID.append(ID)
             student_file.write(ID)
-            student_file.write("\n")
+            student_file.write(", ")
             student_file.write(name)
-            student_file.write("\n")
+            student_file.write(", ")
             student_file.write(birth)
             student_file.write("\n")
         student_file.close()
+        return list_student_ID, self.student_list
+    
+    def student_append(self,id,name,dob):
+        list_student_ID = []
+        self.student_list.update({id: [name,dob]})
+        list_student_ID.append(id)
         return list_student_ID, self.student_list

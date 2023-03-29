@@ -1,9 +1,18 @@
 import pandas as pd
 import numpy as np
+import os
+import json
 
 class average_gpa:
-    def __init__(self,course_mark):
-        self.course_mark = course_mark
+    def __init__(self):
+        self.course_mark = {}
+
+    def read_file(self):
+        file =  os.path.exists("marks.txt")
+        if file == True:    
+            open_file = open('marks.txt')
+            dict_read = open_file.read()
+            self.course_mark = json.loads(dict_read)
     
     def course_credit(self):
         list_course = list(self.course_mark.keys())
